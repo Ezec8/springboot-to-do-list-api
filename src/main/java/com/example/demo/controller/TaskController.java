@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin(origins = "http://localhost:5173") // or wherever React runs
+
+
 @RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
+
 
     private final TaskService taskService;
 
@@ -25,7 +29,7 @@ public class TaskController {
     }
 
     // GET /api/tasks/{id}
-    @GetMapping
+    @GetMapping("/{id}")
     public Optional<Task> getTaskById(@PathVariable Long id) {
         return taskService.getTaskById(id);
     }
@@ -37,14 +41,14 @@ public class TaskController {
     }
 
     // PUT /api/tasks/{id}
-    @PutMapping
+    @PutMapping("/{id}")
     public Task updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
         updatedTask.setId(id);
         return taskService.saveTask(updatedTask);
     }
 
     // DELETE /api/tasks/{id}
-    @DeleteMapping
+    @DeleteMapping("/{id}")
     public void deleteTask(@PathVariable Long id) {
         taskService.deleteTask(id);
     }
